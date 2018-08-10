@@ -16,4 +16,7 @@
     <string name="login_missing_email">Please enter your email.</string>
     <string name="login_missing_password">Please enter your password.</string>
     <string name="login_title">Sign in</string>
+
+    <string name="title_my_requests">My requests</string>
+    <string name="title_received">Received requests</string>
 </resources>

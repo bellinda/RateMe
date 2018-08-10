@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_my_requests"
+        android:icon="@drawable/my_requests_selector"
+        android:title="@string/title_my_requests" />
+
+    <item
+        android:id="@+id/navigation_received_requests"
+        android:icon="@drawable/received_selector"
+        android:title="@string/title_received" />
+</menu>
