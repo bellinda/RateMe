@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">RateMe</string>
+
+    <string name="username_label">Email</string>
+    <string name="password_label">Password</string>
+    <string name="password_repeat_label">Repeat Password</string>
+    <string name="login_btn">Sign in</string>
+    <string name="register_btn">Sign up</string>
+    <string name="register_if_not">You still don\'t have an account? Sign up here</string>
+    <string name="register_successful">You are registered successfully</string>
+    <string name="register_title">User registration</string>
+    <string name="register_not_matching_passwords">Both passwords don\'t match. Please check them again.</string>
+    <string name="register_missing_repeat">Please repeat your password.</string>
+    <string name="register_missing_pass">Please enter a password.</string>
+    <string name="register_missing_email">Please enter your email.</string>
+    <string name="login_missing_email">Please enter your email.</string>
+    <string name="login_missing_password">Please enter your password.</string>
+    <string name="login_title">Sign in</string>
 </resources>

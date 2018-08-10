@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "683489576680",
+    "firebase_url": "https://rateme-5578b.firebaseio.com",
+    "project_id": "rateme-5578b",
+    "storage_bucket": "rateme-5578b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683489576680:android:8af5581031f05123",
+        "android_client_info": {
+          "package_name": "com.angelova.w510.rateme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "683489576680-jvf1o4nf8ajgnlgf25hfe9s81gvornpk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzCPiVnHSv7jI5W5DM8oxASzZcZWw76RU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.angelova.w510.rateme.LoginActivity"
-    android:background="@color/colorPrimary"
+    tools:context="com.angelova.w510.rateme.RegistrationActivity"
+    android:background="@color/colorSecondary"
     android:focusable="false"
     android:focusableInTouchMode="true">
 
@@ -50,7 +50,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.40"
+        app:layout_constraintGuide_percent="0.35"
         android:id="@+id/top_username_guideline" />
 
     <android.support.constraint.Guideline
@@ -113,6 +113,29 @@
 
     </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_password_repeat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/input_layout_password"
+        app:layout_constraintLeft_toRightOf="@id/left_username_guideline"
+        app:layout_constraintRight_toLeftOf="@id/right_username_guideline"
+        android:layout_marginTop="15dp"
+        app:passwordToggleEnabled="true"
+        android:textColorHint="@color/colorAccent"
+        app:passwordToggleTint="@color/colorAccent">
+
+        <EditText
+            android:id="@+id/input_password_repeat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="@string/password_repeat_label"
+            android:textColor="@color/colorAccent"
+            android:theme="@style/MyEditTextTheme"/>
+
+    </android.support.design.widget.TextInputLayout>
+
     <android.support.constraint.Guideline
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -131,7 +154,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75"
+        app:layout_constraintGuide_percent="0.83"
         android:id="@+id/top_btn_guideline" />
 
     <LinearLayout
@@ -142,57 +165,25 @@
         app:layout_constraintTop_toBottomOf="@id/top_btn_guideline"
         android:orientation="horizontal"
         android:gravity="center"
-        android:id="@+id/login_btn_layout">
+        android:id="@+id/register_btn_layout">
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:background="@drawable/border_only_button"
-            android:text="@string/login_btn"
+            android:text="@string/register_btn"
             android:textAllCaps="true"
             android:textColor="@drawable/button_text_color_lite"
             android:textSize="@dimen/button_title_text_size"
-            android:id="@+id/login_btn"/>
+            android:id="@+id/register_btn"/>
 
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/login_loader"
+            android:id="@+id/register_loader"
             android:visibility="gone"
             android:layout_gravity="center"/>
     </LinearLayout>
-
-    <android.support.constraint.Guideline
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.1"
-        android:id="@+id/left_reg_guideline" />
-
-    <android.support.constraint.Guideline
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.9"
-        android:id="@+id/right_reg_guideline" />
-
-    <android.support.constraint.Guideline
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.93"
-        android:id="@+id/top_reg_guideline" />
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/top_reg_guideline"
-        app:layout_constraintLeft_toRightOf="@+id/left_reg_guideline"
-        app:layout_constraintRight_toLeftOf="@+id/right_reg_guideline"
-        android:textColor="@color/colorAccent"
-        android:text="@string/register_if_not"
-        android:gravity="center"
-        android:id="@+id/open_registration_btn"/>
 
 </android.support.constraint.ConstraintLayout>
