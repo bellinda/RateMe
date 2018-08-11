@@ -44,7 +44,7 @@ public class OwnRequestsAdapter extends RecyclerView.Adapter<OwnRequestsAdapter.
         String rate = String.format("%s € ➡ %s €", request.getCurrentHourRate(), request.getDesiredHourRate());
         holder.rateView.setText(rate);
         holder.dateView.setText(request.getDate());
-        holder.answersCountView.setText(String.format("%s answers received", request.getAnswers().size()));
+        holder.answersCountView.setText(String.format("%s answer(s) received", request.getAnswers().size()));
         if (request.getAnswers().size() == 0) {
            holder.colorIndicator.setBackgroundColor(ContextCompat.getColor(context, R.color.color_indicator_no));
         } else if (request.getAnswers().size() < request.getRecipients().size()) {

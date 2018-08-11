@@ -1,6 +1,5 @@
 package com.angelova.w510.rateme.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -57,10 +56,9 @@ public class MyRequestsFragment extends Fragment {
         mAddRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddRequestDialog dialog = new AddRequestDialog(getActivity(), emailArr, new AddRequestDialog.DialogClickListener() {
+                AddRequestDialog dialog = new AddRequestDialog(getActivity(), author, emailArr, new AddRequestDialog.DialogClickListener() {
                     @Override
                     public void onSave(Request request) {
-                        request.setAuthor(author);
                         createRequest(request);
                     }
                 });
@@ -75,28 +73,28 @@ public class MyRequestsFragment extends Fragment {
 //        mAdapter = new OwnRequestsAdapter(mDataList, getActivity());
 //        mRecyclerView.setAdapter(mAdapter);
 
-        getAllDocuments(author);
+        getAllOwnRequests(author);
 
         return rootView;
     }
 
-    private void createRequest(Request request) {
+    private void createRequest(final Request request) {
         mDb.collection("userRequests").document(request.getAuthor()).collection("requests").add(request)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 System.out.println("DocumentSnapshot successfully written!");
+                refreshAllRequests(request.getAuthor());
             }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        System.out.println("Error writing document " + e.getMessage());
-                    }
-                });
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                System.out.println("Error writing document " + e.getMessage());
+            }
+        });
     }
 
-    private void getAllDocuments(String userEmail) {
+    private void getAllOwnRequests(String userEmail) {
         final List<Request> requests = new ArrayList<>();
         mDb.collection("userRequests").document(userEmail).collection("requests")
                 .get()
@@ -113,7 +111,6 @@ public class MyRequestsFragment extends Fragment {
                                 mNoItemsView.setVisibility(View.GONE);
                                 mRecyclerView.setVisibility(View.VISIBLE);
                                 mDataList.addAll(requests);
-                                //mAdapter.notifyDataSetChanged();
 
                                 mAdapter = new OwnRequestsAdapter(mDataList, getActivity());
                                 mRecyclerView.setAdapter(mAdapter);
@@ -121,6 +118,28 @@ public class MyRequestsFragment extends Fragment {
                                 mRecyclerView.setVisibility(View.GONE);
                                 mNoItemsView.setVisibility(View.VISIBLE);
                             }
+                        } else {
+                            //Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    public void refreshAllRequests(String author) {
+        final List<Request> requests = new ArrayList<>();
+        mDb.collection("userRequests").document(author).collection("requests")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Request request = document.toObject(Request.class);
+                                requests.add(request);
+                            }
+                            mDataList.clear();
+                            mDataList.addAll(requests);
+                            mAdapter.notifyDataSetChanged();
                         } else {
                             //Log.d(TAG, "Error getting documents: ", task.getException());
                         }

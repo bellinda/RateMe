@@ -35,6 +35,7 @@ public class AddRequestDialog extends Dialog {
     private DialogClickListener mListener;
     private Activity activity;
     private String[] possibleRecipients;
+    private String author;
     private EditText mCurrentRate;
     private EditText mDesiredRate;
     private MultiAutoCompleteTextView mRecipients;
@@ -46,12 +47,13 @@ public class AddRequestDialog extends Dialog {
         void onSave(Request request);
     }
 
-    public AddRequestDialog(Activity activity, String[] possibleRecipients, DialogClickListener listener) {
+    public AddRequestDialog(Activity activity, String author, String[] possibleRecipients, DialogClickListener listener) {
         super(activity, R.style.Theme_AppCompat_Light_Dialog_Alert);
 
         this.activity = activity;
         this.mListener = listener;
         this.possibleRecipients = possibleRecipients;
+        this.author = author;
         this.setCancelable(false);
     }
 
@@ -94,6 +96,7 @@ public class AddRequestDialog extends Dialog {
                 } else {
 
                     Request request = new Request();
+                    request.setAuthor(author);
                     request.setCurrentHourRate(Double.parseDouble(mCurrentRate.getText().toString()));
                     request.setDesiredHourRate(Double.parseDouble(mDesiredRate.getText().toString()));
                     String recipientsString = mRecipients.getText().toString();
