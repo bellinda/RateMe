@@ -19,4 +19,19 @@
 
     <string name="title_my_requests">My requests</string>
     <string name="title_received">Received requests</string>
+
+    <string name="dialog_add_request_title">New request</string>
+    <string name="dialog_add_request_cur_label">Current hour rate</string>
+    <string name="dialog_add_request_des_label">Desired hour rate</string>
+    <string name="dialog_add_request_recipients_label">Recipients</string>
+    <string name="dialog_add_request_comment_label">Comment</string>
+    <string name="dialog_add_request_cancel_label">Cancel</string>
+    <string name="dialog_add_request_save_label">Save</string>
+    <string name="dialog_add_request_no_desired_rate">Please enter your desired hour rate before submitting</string>
+    <string name="dialog_add_request_no_current_rate">Please enter your current hour rate before submitting</string>
+    <string name="dialog_add_request_no_recipients">Please enter the recipients of your request before submitting</string>
+    <string name="dialog_add_request_error_title">Warning</string>
+
+    <string name="fragment_my_requests_no_items">No requests available yet</string>
+    <string name="fragment_my_requests_item_button_title">View answers</string>
 </resources>

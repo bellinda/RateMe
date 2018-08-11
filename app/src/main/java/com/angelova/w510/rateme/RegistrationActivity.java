@@ -44,7 +44,7 @@ public class RegistrationActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.parseColor("#FF6600"));
+            window.setStatusBarColor(Color.parseColor("#c5ff6600"));
         }
 
         mAuth = FirebaseAuth.getInstance();

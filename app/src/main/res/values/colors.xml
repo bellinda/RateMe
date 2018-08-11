@@ -4,4 +4,8 @@
     <color name="colorPrimaryDark">#0c0e1b</color>
     <color name="colorAccent">#fafafa</color>
     <color name="colorSecondary">#FF6600</color>
+    <color name="colorSecondaryLite">#c5ff6600</color>
+    <color name="color_indicator_no">#da0909</color>
+    <color name="color_indicator_not_all">#edbe00</color>
+    <color name="color_indicator_all">#4a9e48</color>
 </resources>

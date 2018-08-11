@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.angelova.w510.rateme.RegistrationActivity"
-    android:background="@color/colorSecondary"
+    android:background="@color/colorSecondaryLite"
     android:focusable="false"
     android:focusableInTouchMode="true">
 

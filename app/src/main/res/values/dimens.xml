@@ -6,4 +6,9 @@
     <dimen name="warn_dialog_button_height">45dp</dimen>
     <dimen name="warn_dialog_buttons_text_size">18sp</dimen>
     <dimen name="warn_dialog_title_text_size">18sp</dimen>
+
+    <dimen name="new_request_dialog_text_size">16sp</dimen>
+    <dimen name="new_request_dialog_euro_sign_text_size">24sp</dimen>
+    <dimen name="new_request_dialog_multiline_edit_height">100dp</dimen>
+    <dimen name="new_request_dialog_recipients_view_height">70dp</dimen>
 </resources>

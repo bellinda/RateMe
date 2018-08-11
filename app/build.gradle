@@ -5,7 +5,7 @@ android {
     buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "com.angelova.w510.rateme"
-        minSdkVersion 15
+        minSdkVersion 17
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -46,6 +46,8 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:15.0.0'
     compile 'com.google.firebase:firebase-firestore:15.0.0'
     compile 'com.google.firebase:firebase-storage:15.0.0'
+    compile 'com.melnykov:floatingactionbutton:1.3.0'
+    compile 'com.github.clans:fab:1.6.2'
     testCompile 'junit:junit:4.12'
 }
 
