@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.angelova.w510.rateme.MenuActivity;
 import com.angelova.w510.rateme.R;
 import com.angelova.w510.rateme.models.Request;
 
@@ -55,7 +56,11 @@ public class OwnRequestsAdapter extends RecyclerView.Adapter<OwnRequestsAdapter.
         holder.viewAnswersBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (request.getAnswers().size() == 0) {
+                    ((MenuActivity) context).showAlertDialogNow(context.getString(R.string.fragment_my_requests_no_answers), context.getString(R.string.fragment_my_requests_no_answers_title));
+                } else {
+                    ((MenuActivity) context).showAnswersDialog(request);
+                }
             }
         });
     }

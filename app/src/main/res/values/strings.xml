@@ -34,4 +34,9 @@
 
     <string name="fragment_my_requests_no_items">No requests available yet</string>
     <string name="fragment_my_requests_item_button_title">View answers</string>
+    <string name="fragment_my_requests_no_answers">There are still no answers for this request.</string>
+    <string name="fragment_my_requests_no_answers_title">Warning</string>
+
+    <string name="dialog_list_answers_from">From:</string>
+    <string name="dialog_list_answers_content">Content:</string>
 </resources>

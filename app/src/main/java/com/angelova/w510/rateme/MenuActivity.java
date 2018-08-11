@@ -2,14 +2,18 @@ package com.angelova.w510.rateme;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.angelova.w510.rateme.dialogs.WarnDialog;
 import com.angelova.w510.rateme.fragments.MyRequestsFragment;
 import com.angelova.w510.rateme.fragments.ReceivedRequestsFragment;
+import com.angelova.w510.rateme.models.Request;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -79,4 +83,20 @@ public class MenuActivity extends AppCompatActivity {
         }
 
     };
+
+    public void showAnswersDialog(Request request) {
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.content);
+        if (f instanceof MyRequestsFragment) {
+            ((MyRequestsFragment) f).showAnswersListDialog(request);
+        }
+    }
+
+    public void showAlertDialogNow(String message, String title) {
+        WarnDialog warning = new WarnDialog(this, title, message, new WarnDialog.DialogClickListener() {
+            @Override
+            public void onClick() {
+            }
+        });
+        warning.show();
+    }
 }

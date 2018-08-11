@@ -11,4 +11,6 @@
     <dimen name="new_request_dialog_euro_sign_text_size">24sp</dimen>
     <dimen name="new_request_dialog_multiline_edit_height">100dp</dimen>
     <dimen name="new_request_dialog_recipients_view_height">70dp</dimen>
+
+    <dimen name="dialog_answers_listing_recyclerview_height">200dp</dimen>
 </resources>

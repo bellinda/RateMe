@@ -1,5 +1,6 @@
 package com.angelova.w510.rateme.fragments;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.angelova.w510.rateme.R;
 import com.angelova.w510.rateme.adapters.OwnRequestsAdapter;
 import com.angelova.w510.rateme.dialogs.AddRequestDialog;
+import com.angelova.w510.rateme.dialogs.AnswersDialog;
 import com.angelova.w510.rateme.models.Request;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -146,4 +148,10 @@ public class MyRequestsFragment extends Fragment {
                     }
                 });
     }
+
+    public void showAnswersListDialog(Request request) {
+        AnswersDialog dialog = new AnswersDialog(getActivity(), request.getAnswers(), request.getRecipients().size());
+        dialog.show();
+    }
+
 }
