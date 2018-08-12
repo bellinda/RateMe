@@ -71,6 +71,7 @@ public class MenuActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_received_requests:
                     Bundle bundleA = new Bundle();
+                    bundleA.putString("email", mUserEmail);
                     ReceivedRequestsFragment receivedRequestsFragment = new ReceivedRequestsFragment();
                     receivedRequestsFragment.setArguments(bundleA);
                     transaction.replace(R.id.content, receivedRequestsFragment).commit();

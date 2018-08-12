@@ -39,4 +39,10 @@
 
     <string name="dialog_list_answers_from">From:</string>
     <string name="dialog_list_answers_content">Content:</string>
+
+    <string name="fragment_received_requests_add_answer_btn">Add answer</string>
+    <string name="fragment_received_requests_view_answer_btn">View answer</string>
+    <string name="fragment_received_requests_view_answer_title">Your answer</string>
+    <string name="fragment_received_requests_no_items">No received requests yet</string>
+
 </resources>

@@ -72,16 +72,13 @@ public class MyRequestsFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
 
-//        mAdapter = new OwnRequestsAdapter(mDataList, getActivity());
-//        mRecyclerView.setAdapter(mAdapter);
-
         getAllOwnRequests(author);
 
         return rootView;
     }
 
     private void createRequest(final Request request) {
-        mDb.collection("userRequests").document(request.getAuthor()).collection("requests").add(request)
+        mDb.collection("requests").add(request)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
@@ -98,7 +95,7 @@ public class MyRequestsFragment extends Fragment {
 
     private void getAllOwnRequests(String userEmail) {
         final List<Request> requests = new ArrayList<>();
-        mDb.collection("userRequests").document(userEmail).collection("requests")
+        mDb.collection("requests").whereEqualTo("author", userEmail)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -129,7 +126,7 @@ public class MyRequestsFragment extends Fragment {
 
     public void refreshAllRequests(String author) {
         final List<Request> requests = new ArrayList<>();
-        mDb.collection("userRequests").document(author).collection("requests")
+        mDb.collection("requests").whereEqualTo("author", author)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -138,6 +135,13 @@ public class MyRequestsFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Request request = document.toObject(Request.class);
                                 requests.add(request);
+                            }
+                            if (mAdapter == null) {
+                                mAdapter = new OwnRequestsAdapter(mDataList, getActivity());
+                                mRecyclerView.setAdapter(mAdapter);
+
+                                mNoItemsView.setVisibility(View.GONE);
+                                mRecyclerView.setVisibility(View.VISIBLE);
                             }
                             mDataList.clear();
                             mDataList.addAll(requests);

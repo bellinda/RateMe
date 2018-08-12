@@ -105,6 +105,9 @@ public class AddRequestDialog extends Dialog {
                         recipientsString = recipientsString.substring(0, recipientsString.length() - 1);
                     }
                     List<String> recipients = new ArrayList<String>(Arrays.asList(recipientsString.split(",")));
+                    for (int i = 0; i < recipients.size(); i++) {
+                        recipients.set(i, recipients.get(i).trim());
+                    }
                     request.setRecipients(recipients);
                     if (mComment.getText() != null && !TextUtils.isEmpty(mComment.getText())) {
                         request.setComment(mComment.getText().toString());
