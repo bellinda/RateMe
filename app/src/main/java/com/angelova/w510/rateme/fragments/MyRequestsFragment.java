@@ -1,9 +1,9 @@
 package com.angelova.w510.rateme.fragments;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,13 +33,15 @@ import java.util.List;
  * Created by W510 on 11.8.2018 г..
  */
 
-public class MyRequestsFragment extends Fragment {
+public class MyRequestsFragment extends Fragment  implements SwipeRefreshLayout.OnRefreshListener {
 
     private FloatingActionButton mAddRequestBtn;
     private TextView mNoItemsView;
     private RecyclerView mRecyclerView;
     private OwnRequestsAdapter mAdapter;
     private List<Request> mDataList = new ArrayList<>();
+    private String currentUser;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private FirebaseFirestore mDb;
 
@@ -53,12 +55,12 @@ public class MyRequestsFragment extends Fragment {
         mNoItemsView = (TextView) rootView.findViewById(R.id.no_items_view);
 
         final String[] emailArr = {"abv@abv.bg", "donkey@gmail.com", "gabito_ang@abv.bg", "andrea@gmail.com", "anika_lopez@gmail.com", "antonio@gmail.com", "gareth@abv.bg"};
-        final String author = getArguments().getString("email");
+        currentUser = getArguments().getString("email");
 
         mAddRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddRequestDialog dialog = new AddRequestDialog(getActivity(), author, emailArr, new AddRequestDialog.DialogClickListener() {
+                AddRequestDialog dialog = new AddRequestDialog(getActivity(), currentUser, emailArr, new AddRequestDialog.DialogClickListener() {
                     @Override
                     public void onSave(Request request) {
                         createRequest(request);
@@ -72,7 +74,18 @@ public class MyRequestsFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
 
-        getAllOwnRequests(author);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+
+        mSwipeRefreshLayout.post(new Runnable() {
+
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(true);
+
+                getAllOwnRequests();
+            }
+        });
 
         return rootView;
     }
@@ -83,7 +96,7 @@ public class MyRequestsFragment extends Fragment {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 System.out.println("DocumentSnapshot successfully written!");
-                refreshAllRequests(request.getAuthor());
+                refreshAllRequests();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -93,9 +106,10 @@ public class MyRequestsFragment extends Fragment {
         });
     }
 
-    private void getAllOwnRequests(String userEmail) {
+    private void getAllOwnRequests() {
+        mSwipeRefreshLayout.setRefreshing(true);
         final List<Request> requests = new ArrayList<>();
-        mDb.collection("requests").whereEqualTo("author", userEmail)
+        mDb.collection("requests").whereEqualTo("author", currentUser)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -120,13 +134,14 @@ public class MyRequestsFragment extends Fragment {
                         } else {
                             //Log.d(TAG, "Error getting documents: ", task.getException());
                         }
+                        mSwipeRefreshLayout.setRefreshing(false);
                     }
                 });
     }
 
-    public void refreshAllRequests(String author) {
+    public void refreshAllRequests() {
         final List<Request> requests = new ArrayList<>();
-        mDb.collection("requests").whereEqualTo("author", author)
+        mDb.collection("requests").whereEqualTo("author", currentUser)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -149,6 +164,9 @@ public class MyRequestsFragment extends Fragment {
                         } else {
                             //Log.d(TAG, "Error getting documents: ", task.getException());
                         }
+                        if(mSwipeRefreshLayout.isRefreshing()) {
+                            mSwipeRefreshLayout.setRefreshing(false);
+                        }
                     }
                 });
     }
@@ -157,5 +175,11 @@ public class MyRequestsFragment extends Fragment {
         AnswersDialog dialog = new AnswersDialog(getActivity(), request.getAnswers(), request.getRecipients().size());
         dialog.show();
     }
+
+    @Override
+    public void onRefresh() {
+        refreshAllRequests();
+    }
+
 
 }

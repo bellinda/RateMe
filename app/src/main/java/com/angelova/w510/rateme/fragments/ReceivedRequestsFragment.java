@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,13 +35,14 @@ import java.util.Map;
  * Created by W510 on 11.8.2018 г..
  */
 
-public class ReceivedRequestsFragment extends Fragment {
+public class ReceivedRequestsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private TextView mNoItemsView;
     private RecyclerView mRecyclerView;
     private ReceivedRequestsAdapter mAdapter;
     private List<Request> mDataList = new ArrayList<>();
     private String author;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private FirebaseFirestore mDb;
 
@@ -57,12 +59,24 @@ public class ReceivedRequestsFragment extends Fragment {
 
         author = getArguments().getString("email");
 
-        getAllRequestsWhereCurrentUserIsRecipient(author);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+
+        mSwipeRefreshLayout.post(new Runnable() {
+
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(true);
+
+                getAllRequestsWhereCurrentUserIsRecipient(author);
+            }
+        });
 
         return rootView;
     }
 
     private void getAllRequestsWhereCurrentUserIsRecipient(final String userEmail) {
+        mSwipeRefreshLayout.setRefreshing(true);
         final List<Request> requests = new ArrayList<>();
 
         //TODO: change with whereArrayContains when it is available
@@ -90,6 +104,7 @@ public class ReceivedRequestsFragment extends Fragment {
                     mRecyclerView.setVisibility(View.GONE);
                     mNoItemsView.setVisibility(View.VISIBLE);
                 }
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }
@@ -131,12 +146,20 @@ public class ReceivedRequestsFragment extends Fragment {
                         requests.add(request);
                     }
                 }
-                if(requests.size() > 0) {
+                if (requests.size() > 0) {
                     mDataList.clear();
                     mDataList.addAll(requests);
                     mAdapter.notifyDataSetChanged();
                 }
+                if (mSwipeRefreshLayout.isRefreshing()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
+    }
+
+    @Override
+    public void onRefresh() {
+        refreshAllRequests();
     }
 }
