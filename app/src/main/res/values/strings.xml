@@ -45,4 +45,8 @@
     <string name="fragment_received_requests_view_answer_title">Your answer</string>
     <string name="fragment_received_requests_no_items">No received requests yet</string>
 
+    <string name="dialog_add_answer_title">Your answer</string>
+    <string name="dialog_add_answer_error_title">Warning</string>
+    <string name="dialog_add_answer_nothing">Please enter your answer before saving</string>
+
 </resources>

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.angelova.w510.rateme.adapters.ReceivedRequestsAdapter;
 import com.angelova.w510.rateme.dialogs.WarnDialog;
 import com.angelova.w510.rateme.fragments.MyRequestsFragment;
 import com.angelova.w510.rateme.fragments.ReceivedRequestsFragment;
@@ -89,6 +90,13 @@ public class MenuActivity extends AppCompatActivity {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.content);
         if (f instanceof MyRequestsFragment) {
             ((MyRequestsFragment) f).showAnswersListDialog(request);
+        }
+    }
+
+    public void showAddAnswerDialog(Request request) {
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.content);
+        if (f instanceof ReceivedRequestsFragment) {
+            ((ReceivedRequestsFragment) f).showAddAnswerDialog(request);
         }
     }
 

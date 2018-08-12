@@ -14,7 +14,10 @@ import android.widget.TextView;
 import com.angelova.w510.rateme.R;
 import com.angelova.w510.rateme.adapters.OwnRequestsAdapter;
 import com.angelova.w510.rateme.adapters.ReceivedRequestsAdapter;
+import com.angelova.w510.rateme.dialogs.AddAnswerDialog;
+import com.angelova.w510.rateme.models.Answer;
 import com.angelova.w510.rateme.models.Request;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -25,6 +28,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by W510 on 11.8.2018 г..
@@ -36,6 +40,7 @@ public class ReceivedRequestsFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private ReceivedRequestsAdapter mAdapter;
     private List<Request> mDataList = new ArrayList<>();
+    private String author;
 
     private FirebaseFirestore mDb;
 
@@ -50,7 +55,7 @@ public class ReceivedRequestsFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
 
-        final String author = getArguments().getString("email");
+        author = getArguments().getString("email");
 
         getAllRequestsWhereCurrentUserIsRecipient(author);
 
@@ -67,6 +72,7 @@ public class ReceivedRequestsFragment extends Fragment {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     Request request = document.toObject(Request.class);
+                    request.setDbId(document.getId());
                     boolean isRecipient = request.getRecipients().contains(userEmail);
                     System.out.println("IS RECIPIENT " + isRecipient);
                     if (isRecipient) {
@@ -83,6 +89,52 @@ public class ReceivedRequestsFragment extends Fragment {
                 } else {
                     mRecyclerView.setVisibility(View.GONE);
                     mNoItemsView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
+
+    public void showAddAnswerDialog(final Request request) {
+        AddAnswerDialog dialog = new AddAnswerDialog(getActivity(), request, author, new AddAnswerDialog.DialogClickListener() {
+            @Override
+            public void onSave(Answer answer) {
+                request.getAnswers().add(answer);
+                ObjectMapper m = new ObjectMapper();
+                Map<String,Object> requestMap = m.convertValue(request, Map.class);
+                requestMap.remove("dbId");
+
+                mDb.collection("requests").document(request.getDbId()).update(requestMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        refreshAllRequests();
+                    }
+                });
+            }
+        });
+        dialog.show();
+    }
+
+    private void refreshAllRequests() {
+        final List<Request> requests = new ArrayList<>();
+
+        //TODO: change with whereArrayContains when it is available
+        mDb.collection("requests")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Request request = document.toObject(Request.class);
+                    request.setDbId(document.getId());
+                    boolean isRecipient = request.getRecipients().contains(author);
+                    System.out.println("IS RECIPIENT " + isRecipient);
+                    if (isRecipient) {
+                        requests.add(request);
+                    }
+                }
+                if(requests.size() > 0) {
+                    mDataList.clear();
+                    mDataList.addAll(requests);
+                    mAdapter.notifyDataSetChanged();
                 }
             }
         });

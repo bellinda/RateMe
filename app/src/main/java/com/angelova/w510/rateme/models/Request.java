@@ -1,5 +1,7 @@
 package com.angelova.w510.rateme.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -16,6 +18,8 @@ public class Request implements Serializable {
     private String comment;
     private List<Answer> answers;
     private String date;
+    @JsonIgnore
+    private String dbId;
 
     public Request() {
 
@@ -85,5 +89,13 @@ public class Request implements Serializable {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getDbId() {
+        return dbId;
+    }
+
+    public void setDbId(String dbId) {
+        this.dbId = dbId;
     }
 }

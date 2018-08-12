@@ -59,13 +59,13 @@ public class ReceivedRequestsAdapter extends RecyclerView.Adapter<ReceivedReques
         holder.viewAnswerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MenuActivity) context).showAlertDialogNow(context.getString(R.string.fragment_received_requests_view_answer_title), getAnswerOfCurrentUser(request));
+                ((MenuActivity) context).showAlertDialogNow(getAnswerOfCurrentUser(request), context.getString(R.string.fragment_received_requests_view_answer_title));
             }
         });
         holder.addAnswerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ((MenuActivity) context).showAddAnswerDialog(request);
             }
         });
     }
