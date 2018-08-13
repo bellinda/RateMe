@@ -33,24 +33,24 @@
         android:layout_marginRight="10dp"
         android:orientation="horizontal"
         android:paddingBottom="10dp"
-        android:weightSum="10">
+        android:weightSum="11">
 
         <TextView
             android:id="@+id/current_rate_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/dialog_add_request_cur_label"
-            android:layout_weight="5"
+            android:layout_weight="7"
             android:layout_gravity="center_vertical"
             android:textSize="@dimen/new_request_dialog_text_size"/>
 
         <EditText
             android:layout_width="0dp"
             android:layout_height="@dimen/input_field_height"
-            android:layout_weight="4"
-            android:background="@drawable/dark_border"
+            android:layout_weight="3"
             android:inputType="numberDecimal"
             android:padding="5dp"
+            android:gravity="right"
             android:id="@+id/current_rate"/>
 
         <TextView
@@ -70,24 +70,24 @@
         android:layout_marginRight="10dp"
         android:orientation="horizontal"
         android:paddingBottom="10dp"
-        android:weightSum="10">
+        android:weightSum="11">
 
         <TextView
             android:id="@+id/desired_rate_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/dialog_add_request_des_label"
-            android:layout_weight="5"
+            android:layout_weight="7"
             android:layout_gravity="center_vertical"
             android:textSize="@dimen/new_request_dialog_text_size"/>
 
         <EditText
             android:layout_width="0dp"
             android:layout_height="@dimen/input_field_height"
-            android:layout_weight="4"
-            android:background="@drawable/dark_border"
+            android:layout_weight="3"
             android:inputType="numberDecimal"
             android:padding="5dp"
+            android:gravity="right"
             android:id="@+id/desired_rate"/>
 
         <TextView
