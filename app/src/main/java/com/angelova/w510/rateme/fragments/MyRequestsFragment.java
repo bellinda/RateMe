@@ -27,7 +27,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by W510 on 11.8.2018 г..
@@ -42,6 +44,7 @@ public class MyRequestsFragment extends Fragment  implements SwipeRefreshLayout.
     private List<Request> mDataList = new ArrayList<>();
     private String currentUser;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private List<String> emailArr;
 
     private FirebaseFirestore mDb;
 
@@ -54,13 +57,15 @@ public class MyRequestsFragment extends Fragment  implements SwipeRefreshLayout.
         mAddRequestBtn = (FloatingActionButton) rootView.findViewById(R.id.add_new_request_btn);
         mNoItemsView = (TextView) rootView.findViewById(R.id.no_items_view);
 
-        final String[] emailArr = {"abv@abv.bg", "donkey@gmail.com", "gabito_ang@abv.bg", "andrea@gmail.com", "anika_lopez@gmail.com", "antonio@gmail.com", "gareth@abv.bg"};
+        emailArr = new ArrayList<>();
+        getRecipients();
+
         currentUser = getArguments().getString("email");
 
         mAddRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddRequestDialog dialog = new AddRequestDialog(getActivity(), currentUser, emailArr, new AddRequestDialog.DialogClickListener() {
+                AddRequestDialog dialog = new AddRequestDialog(getActivity(), currentUser, emailArr.toArray(new String[emailArr.size()]), new AddRequestDialog.DialogClickListener() {
                     @Override
                     public void onSave(Request request) {
                         createRequest(request);
@@ -169,6 +174,20 @@ public class MyRequestsFragment extends Fragment  implements SwipeRefreshLayout.
                         }
                     }
                 });
+    }
+
+    private void getRecipients() {
+        mDb.collection("recipients").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Map<String, Object> emails = document.getData();
+                        emailArr.addAll(emails.keySet());
+                    }
+                }
+            }
+        });
     }
 
     public void showAnswersListDialog(Request request) {
